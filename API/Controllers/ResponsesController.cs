@@ -11,15 +11,17 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BoardsController : ControllerBase
+    public class ResponsesController : ControllerBase
     {
-        private readonly DoomContext _context;
-        public BoardsController(DoomContext context)
+        public DoomContext _context { get; }
+        public ResponsesController(DoomContext context)
         {
             _context = context;
         }
         [HttpGet]
-        public async Task<ActionResult<List<Board>>> GetBoards() { return await _context.Boards.ToListAsync(); }
-
+        public async Task<ActionResult<List<Response>>> GetPosts(int id)
+        {
+            return await _context.Responses.Where(f => f.Fiber.ID == id).ToListAsync();
+        }
     }
 }
